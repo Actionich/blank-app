@@ -1,10 +1,15 @@
 import streamlit as st
+import os
 
 # 페이지 기본 설정
 st.set_page_config(page_title="상세페이지 예시", layout="centered")
 
 # 히어로 섹션
-st.image("product-image.jpg", use_column_width=True, caption="제품 이미지")
+if os.path.exists("product-image.jpg"):
+    st.image("product-image.jpg", use_container_width=True, caption="제품 이미지")
+else:
+    st.write("제품 이미지 파일을 찾을 수 없습니다.")
+
 st.markdown("<h1 style='text-align: center; color: #333;'>더 나은 삶을 위한 완벽한 선택</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #666;'>고객의 편안함을 위해 디자인된 혁신적인 기술</p>", unsafe_allow_html=True)
 st.markdown("<ul style='text-align: center; list-style-type: none; padding: 0;'>"
@@ -16,7 +21,13 @@ if st.button("지금 구매하기"):
 st.markdown("---")
 st.header("제품 설명")
 st.write("여기에서 제품의 구체적인 사양과 혜택에 대해 설명합니다.")
-st.image(["feature1.jpg", "feature2.jpg"], width=150, caption=["경량 설계", "무소음 작동"])
+features = ["feature1.jpg", "feature2.jpg"]
+captions = ["경량 설계", "무소음 작동"]
+for feature, caption in zip(features, captions):
+    if os.path.exists(feature):
+        st.image(feature, width=150, caption=caption)
+    else:
+        st.write(f"{caption} 이미지 파일을 찾을 수 없습니다.")
 
 # 신뢰 요소
 st.markdown("---")
